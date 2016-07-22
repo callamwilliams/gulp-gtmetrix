@@ -53,10 +53,6 @@ exports.init = function(config) {
 
 			let state = null;
 
-			var test_url = `Full results and improvement suggestions can be seen here: https://gtmetrix.com/reports/${url}/${test_id}`
-
-			gutil.log(gutil.colors.green(test_url));
-
 			while(state !== 'completed') {
 
 				yield gtmetrix.test.get(test_id, function(err, data) {
@@ -70,6 +66,9 @@ exports.init = function(config) {
 						state = data.state;
 
 						if(state == 'completed'){
+						var test_url = 'Full results and improvement suggestions can be seen here: ' + data.results.report_url
+
+						gutil.log(gutil.colors.green(test_url));
 						  self.score(data);
 						}
 
